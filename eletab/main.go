@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/osoderholm/eletab-lite/app/bundles/apibundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/authbundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/clientsbundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/apibundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/authbundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/clientsbundle"
 	"fmt"
 	"net/http"
 	"log"

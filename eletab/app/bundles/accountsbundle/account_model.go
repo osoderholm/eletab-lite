@@ -3,7 +3,7 @@ package accountsbundle
 import (
 	"time"
 	"log"
-	"github.com/osoderholm/eletab-lite/app/crypt"
+	"github.com/osoderholm/eletab-lite/eletab/app/crypt"
 )
 
 // User account. Contains balance and general account stuff.

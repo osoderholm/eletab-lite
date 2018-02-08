@@ -1,7 +1,7 @@
 package transactionsbundle
 
 import (
-	"github.com/osoderholm/eletab-lite/app/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/accountsbundle"
 	"time"
 	"log"
 )

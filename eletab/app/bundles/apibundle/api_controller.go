@@ -9,12 +9,12 @@ import (
 	"golang.org/x/net/html"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
-	"github.com/osoderholm/eletab-lite/app/common"
-	"github.com/osoderholm/eletab-lite/app/crypt"
-	"github.com/osoderholm/eletab-lite/app/bundles/clientsbundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/authbundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/transactionsbundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/common"
+	"github.com/osoderholm/eletab-lite/eletab/app/crypt"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/clientsbundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/authbundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/transactionsbundle"
+	"github.com/osoderholm/eletab-lite/eletab/app/bundles/accountsbundle"
 )
 
 // Controller for the API bundle

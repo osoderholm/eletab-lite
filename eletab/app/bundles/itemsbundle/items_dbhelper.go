@@ -1,7 +1,7 @@
 package itemsbundle
 
 import (
-	"github.com/osoderholm/eletab-lite/app/common"
+	"github.com/osoderholm/eletab-lite/eletab/app/common"
 	"log"
 )
 
