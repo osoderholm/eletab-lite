@@ -18,7 +18,7 @@ func NewManager() *TransactionManager {
 
 // Removes from accounts balance in form of a purchase. Returns created transaction with details
 func (tm *TransactionManager) MakePurchase(account *accountsbundle.Account, cardID string, sum int64) *Transaction {
-	accepted := account.Balance >= sum
+	accepted := account.Balance >= sum && !account.Disabled
 
 	transaction := makeTransaction(TypePurchase, account, cardID, sum, accepted)
 

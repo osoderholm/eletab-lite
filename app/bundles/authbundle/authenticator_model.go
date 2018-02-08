@@ -13,18 +13,22 @@ import (
 	"github.com/osoderholm/eletab-lite/app/common"
 )
 
+// Used for applying authentication for accessing APIs
 type Authenticator struct {
 	signKey		*rsa.PrivateKey
 	VerifyKey 	*rsa.PublicKey
 	common.Controller
 }
 
+// File names and path for generated RSA keys
 const (
 	keyPath 		= "keys"
 	privateKeyFile 	= "eletab.rsa.pem"
 	publicKeyFile 	= "eletab.rsa.pub.pem"
 )
 
+// Initializes an authenticator.
+// Generates RSA public and private keys if needed.
 func Init() *Authenticator {
 	createKeys()
 
@@ -34,6 +38,7 @@ func Init() *Authenticator {
 	}
 }
 
+// Generate RSA private and public keys if none exist
 func createKeys() {
 	if _, err := os.Stat(path.Join(keyPath)); os.IsNotExist(err) {
 		fatal(os.MkdirAll(path.Join(keyPath), os.ModePerm))
@@ -49,6 +54,7 @@ func createKeys() {
 
 }
 
+// Read private key from file
 func getPrivateKey() *rsa.PrivateKey {
 	privateBytes, err := ioutil.ReadFile(path.Join(keyPath, privateKeyFile))
 	fatal(err)
@@ -59,6 +65,7 @@ func getPrivateKey() *rsa.PrivateKey {
 	return privateKey
 }
 
+// Read public key from file
 func getPublicKey() *rsa.PublicKey {
 	publicBytes, err := ioutil.ReadFile(path.Join(keyPath, publicKeyFile))
 	fatal(err)
@@ -69,6 +76,7 @@ func getPublicKey() *rsa.PublicKey {
 	return publicKey
 }
 
+// Generates and writes private key to file
 func createPrivateKey() {
 	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
 	fatal(err)
@@ -82,6 +90,7 @@ func createPrivateKey() {
 	createPublicKey(privateKey)
 }
 
+// Generates and writes public key to file
 func createPublicKey(priv *rsa.PrivateKey) {
 	PubASN1, err := x509.MarshalPKIXPublicKey(&priv.PublicKey)
 	fatal(err)
@@ -94,6 +103,7 @@ func createPublicKey(priv *rsa.PrivateKey) {
 	err = ioutil.WriteFile(path.Join(keyPath, publicKeyFile), pemdata, os.ModePerm)
 }
 
+// Used for error handling.
 func fatal(err error) {
 	if err != nil {
 		log.Fatal(err)

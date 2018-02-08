@@ -35,4 +35,7 @@ func GetCategories() *[]Category {
 	return categories
 }
 
-
+func DeleteCategory(category *Category) bool {
+	err := deleteCategoryFromDB(category.ID)
+	return err == nil
+}

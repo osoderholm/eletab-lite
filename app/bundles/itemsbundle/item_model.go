@@ -55,3 +55,8 @@ func GetItemByID(id int) *Item {
 	}
 	return item
 }
+
+func DeleteItem(item *Item) bool {
+	err := deleteItemFromDB(item.ID)
+	return err == nil
+}

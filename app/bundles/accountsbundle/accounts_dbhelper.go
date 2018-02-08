@@ -15,7 +15,9 @@ func (helper helper) CreateTable(database *common.Database) error {
 			id INTEGER UNIQUE NOT NULL PRIMARY KEY,
 			name TEXT NOT NULL,
 			username TEXT UNIQUE NOT NULL,
+			password TEXT NOT NULL,
 			balance INT64 CHECK(balance >= 0),
+			level INTEGER NOT NULL,
 			disabled INTEGER NOT NULL,
 			created DATETIME NOT NULL
 			);`
@@ -67,9 +69,9 @@ func addAccountToDB(account *Account) error {
 
 	query := `
 		INSERT INTO accounts (
-			name, username, balance, disabled, created
+			name, username, password, balance, level, disabled, created
 		) VALUES (
-			:name, :username, :balance, :disabled, :created
+			:name, :username, :password, :balance, :level, :disabled, :created
 		);
 		`
 	res, err := db.NamedExec(query, account)
@@ -132,7 +134,9 @@ func updateAccountInDB(account Account) error {
 			SET
 				name = :name,
 				username = :username,
+				password = :password,
 				balance = :balance,
+				level = :level,
 				disabled = :disabled
 			WHERE accounts.id = :id;`
 
@@ -195,6 +199,7 @@ func getCardsFromDB() (*[]Card, error) {
 				accounts.name "account.name",
 				accounts.username "account.username",
 				accounts.balance "account.balance",
+				accounts.level "account.level",
 				accounts.disabled "account.disabled",
 				accounts.created "account.created"
 			FROM
@@ -216,6 +221,7 @@ func getCardsByAccountFromDB(account *Account) (*[]Card, error) {
 				accounts.name "account.name",
 				accounts.username "account.username",
 				accounts.balance "account.balance",
+				accounts.level "account.level",
 				accounts.disabled "account.disabled",
 				accounts.created "account.created"
 			FROM
@@ -238,6 +244,7 @@ func getCardByCardIDFromDB(cardID string) (*Card, error) {
 				accounts.name "account.name",
 				accounts.username "account.username",
 				accounts.balance "account.balance",
+				accounts.level "account.level",
 				accounts.disabled "account.disabled",
 				accounts.created "account.created"
 			FROM

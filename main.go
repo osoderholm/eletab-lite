@@ -6,6 +6,8 @@ import (
 	"github.com/osoderholm/eletab-lite/app/bundles/authbundle"
 	"github.com/osoderholm/eletab-lite/app/bundles/clientsbundle"
 	"fmt"
+	"net/http"
+	"log"
 )
 
 func main() {
@@ -56,6 +58,18 @@ func main() {
 
 	apiCtrl := apibundle.NewController()
 
-	apiSR.Handle("", a.Handle(apiCtrl.Handle))
+	apiSR.Handle("/", a.Handle(apiCtrl.Handle))
+	apiSR.Handle("/cards/{action}", a.Handle(apiCtrl.HandleCard))
+	apiSR.Handle("/account/{action}", a.Handle(apiCtrl.HandleAccount))
+	apiSR.Handle("/clients/{action}", a.Handle(apiCtrl.HandleClient))
+	apiSR.HandleFunc("/client_login", apiCtrl.HandleClientLogin).Methods(http.MethodPost)
+	apiSR.HandleFunc("/account_login", apiCtrl.HandleAccountLogin).Methods(http.MethodPost)
+
+	staticFileDirectory := http.Dir("./app/static/")
+	staticFileHandler := http.StripPrefix("/", http.FileServer(staticFileDirectory))
+	r.PathPrefix("/").Handler(staticFileHandler)
+
+	http.Handle("/", r)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }

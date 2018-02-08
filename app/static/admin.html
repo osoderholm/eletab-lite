@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eletab | Admin</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script type="application/javascript" src="js/lib/jquery-3.3.1.min.js"></script>
+    <script type="application/javascript" src="js/lib/underscore.js"></script>
+    <script type="application/javascript" src="js/Eletab.js"></script>
+    <script type="application/javascript" src="js/AccountLoginManager.js"></script>
+    <script type="application/javascript" src="js/admin.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome, <span id="account_name"></span></h1>
+            <p>Username: <span id="account_username"></span>, Level: <span id="account_level"></span></p>
+        </div>
+        <div class="box">
+            <h2>New account</h2>
+            <p>
+                <label for="new_name">Name:</label>
+                <input type="text" id="new_name" autocomplete="off">
+            </p>
+            <p>
+                <label for="new_username">Username:</label>
+                <input type="text" id="new_username" autocomplete="off">
+            </p>
+            <p>
+                <label for="new_password">Password:</label>
+                <input type="password" id="new_password" autocomplete="off">
+            </p>
+            <p>
+                <label for="new_balance">Balance (cents):</label>
+                <input type="number" id="new_balance" autocomplete="off">
+            </p>
+            <p>
+                <label for="new_level">Level:</label>
+                <select id="new_level">
+                    <option value="0">Default</option>
+                    <option value="1">Moderator</option>
+                    <option value="2">Admin</option>
+                </select>
+            </p>
+            <p>
+                <button id="btn_add_account">Add account</button>
+            </p>
+        </div>
+        <h2>Accounts <span><button id="btn_refresh_accounts">Refresh</button></span></h2>
+        <div class="big" id="accounts_container"></div>
+
+        <div class="box">
+            <h2>New client</h2>
+            <p>
+                <label for="new_client_description">Description:</label>
+                <input type="text" id="new_client_description" autocomplete="off">
+            </p>
+            <p>
+                <label for="new_client_level">Level:</label>
+                <select id="new_client_level">
+                    <option value="1">Get</option>
+                    <option value="2">Charge</option>
+                    <option value="3">Edit</option>
+                </select>
+            </p>
+            <p>
+                <button id="btn_add_client">Add client</button>
+            </p>
+        </div>
+
+        <h2>Clients <span><button id="btn_refresh_clients">Refresh</button></span></h2>
+        <div class="big" id="clients_container"></div>
+    </div>
+</body>
+</html>

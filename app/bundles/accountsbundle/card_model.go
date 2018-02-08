@@ -5,6 +5,8 @@ import (
 	"log"
 )
 
+// Card for account
+// This is basically a payment method for Account.
 type Card struct {
 	ID			int 		`json:"id" db:"id"`
 	CardID		string 		`json:"card_id" db:"card_id"`
@@ -14,6 +16,7 @@ type Card struct {
 	Added 		string		`json:"added" db:"added"`
 }
 
+// Returns all cards and the accounts associated with them.
 func GetCards() *[]Card {
 	cards, err := getCardsFromDB()
 	if err != nil {
@@ -23,6 +26,7 @@ func GetCards() *[]Card {
 	return cards
 }
 
+// Get a card and its parent account by the cards unique ID.
 func GetCardByCardID(cardID string) *Card {
 	card, err := getCardByCardIDFromDB(cardID)
 	if err != nil {
@@ -32,6 +36,7 @@ func GetCardByCardID(cardID string) *Card {
 	return card
 }
 
+// Add card to account and save to DB.
 func (a *Account) AddCard(cardID string) *Card {
 	card := &Card{
 		CardID: cardID,
@@ -47,6 +52,7 @@ func (a *Account) AddCard(cardID string) *Card {
 	return card
 }
 
+// Get all cards associated with account.
 func (a *Account) GetCards() *[]Card {
 	cards, err := getCardsByAccountFromDB(a)
 	if err != nil {
@@ -56,6 +62,7 @@ func (a *Account) GetCards() *[]Card {
 	return cards
 }
 
+// Delete a card from account. Removes it from the DB too.
 func (a *Account) DeleteCard(card *Card) bool {
 	if a.ID != card.AccountID {
 		return false

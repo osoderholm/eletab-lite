@@ -1,0 +1,36 @@
+body{
+    padding: 0;
+    width: 100%;
+    margin: 0 0 100px;
+}
+
+.wrapper{
+    width: 90%;
+    padding: 5px;
+}
+
+#accounts_container,
+#clients_container {
+    border: 1px solid black;
+    overflow-y: auto;
+}
+
+#accounts_container .row:nth-child(even),
+#clients_container .row:nth-child(2n+1){
+    background: #D2D2D2;
+}
+
+.row{
+    display: table-row;
+    width: 100%;
+}
+
+.row span {
+    display: table-cell;
+    padding: 5px;
+}
+
+.row.header{
+    font-weight: bold;
+    background: deepskyblue !important;
+}

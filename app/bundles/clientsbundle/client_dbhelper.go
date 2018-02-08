@@ -15,6 +15,7 @@ func (helper helper) CreateTable(database *common.Database) error {
 			id INTEGER UNIQUE NOT NULL PRIMARY KEY,
 			key TEXT UNIQUE NOT NULL,
 			secret TEXT NOT NULL,
+			description TEXT NOT NULL,
 			level INTEGER NOT NULL,
 			added DATETIME NOT NULL
 			);`
@@ -50,9 +51,9 @@ func addClientToDB(client *Client) error {
 
 	query := `
 		INSERT INTO clients (
-			key, secret, level, added
+			key, secret, description, level, added
 		) VALUES (
-			:key, :secret, :level, :added
+			:key, :secret, :description, :level, :added
 		);
 		`
 	res, err := db.NamedExec(query, client)

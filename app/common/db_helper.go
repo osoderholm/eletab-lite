@@ -43,7 +43,7 @@ func (db *Database) Exec(qry string, data... interface{}) (sql.Result, error) {
 
 	var res sql.Result
 	if len(data) > 0 {
-		res, err = statement.Exec(data)
+		res, err = statement.Exec(data...)
 	} else {
 		res, err = statement.Exec()
 	}
