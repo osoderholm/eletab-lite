@@ -4,10 +4,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/osoderholm/eletab-lite/eletab/app/bundles/apibundle"
 	"github.com/osoderholm/eletab-lite/eletab/app/bundles/authbundle"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/clientsbundle"
-	"fmt"
 	"net/http"
 	"log"
+	"os"
 )
 
 func main() {
@@ -43,12 +42,14 @@ func main() {
 	transactions = tm.GetTransactionsByAccount(account, 2018, 1, 20, 2018, 1, 21)
 	for _, t := range *transactions {
 		fmt.Println(t)
-	}*/
+	}
 
 	clients := clientsbundle.GetClients()
 	for _, c := range *clients {
 		fmt.Println(c)
-	}
+	}*/
+
+	port := string(os.Getenv("ELETAB_PORT"))
 
 	a := authbundle.Init()
 
@@ -70,6 +71,6 @@ func main() {
 	r.PathPrefix("/").Handler(staticFileHandler)
 
 	http.Handle("/", r)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 
 }
