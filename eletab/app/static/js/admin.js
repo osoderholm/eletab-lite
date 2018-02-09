@@ -128,7 +128,7 @@ function getClients() {
                             <span><%- client.description %></span>\
                             <span><%- client.api_key %></span>\
                             <span><%- client.secret %></span>\
-                            <span><%- client.level %></span>\
+                            <span><%- client.api_level %></span>\
                             <span><button onclick="deleteClient(\'<%- client.api_key %>\', \'<%- client.description %>\')" >Delete</button></span>\
                         </div>\
                     <% }) %> \
@@ -150,9 +150,8 @@ function addClient() {
         alert("Added client!\nDescription: "+
             data.description+"\nKey: "+
             data.api_key+"\nSecret: "+
-            data.secret+"\nBalance: "+
-            data.balance+"\nLevel: "+
-            data.level);
+            data.secret+"\nLevel: "+
+            data.api_level);
         $("#new_client_description").val("");
         $("#new_client_level").val(1);
         getClients();

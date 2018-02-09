@@ -5,14 +5,14 @@ import (
 	"path"
 	"github.com/jmoiron/sqlx"
 	"database/sql"
-	"os"
 )
 
 // Database file name
 const DBFile = "eletab_lite.db"
 
 // Database path
-var DBPath = os.Getenv("ELETAB_PATH")
+//var DBPath = os.Getenv("ELETAB_PATH")
+var DBPath = ""
 
 type DatabaseHelper interface {
 	CreateTable(database *Database) error
