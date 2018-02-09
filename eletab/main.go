@@ -8,48 +8,10 @@ import (
 	"log"
 	"os"
 	"path"
+	"fmt"
 )
 
 func main() {
-	/*category := itemsbundle.AddCategory("test category")
-	fmt.Println(*category)
-
-	item := itemsbundle.AddItem("test", 100, category)
-	fmt.Println(*item)
-
-	items := itemsbundle.GetItems()
-	for _, it := range *items {
-		fmt.Println(it)
-	}
-
-	card := account.AddCard("1234567890")
-	fmt.Println(*card)
-
-	j, _ := json.Marshal(accountsbundle.GetCardByCardID("1234567890"))
-
-	fmt.Printf("%s", j)*/
-
-	/*account := accountsbundle.GetAccountByUsername("odoo")
-	fmt.Println(*account)
-
-	tm := transactionsbundle.NewManager()
-	//transaction := tm.MakeInsert(account, 600)
-	//fmt.Println(*transaction)
-
-	transactions := tm.GetTransactions(2018, 1, 20, 2018, 1, 21)
-	for _, t := range *transactions {
-		fmt.Println(t)
-	}
-	transactions = tm.GetTransactionsByAccount(account, 2018, 1, 20, 2018, 1, 21)
-	for _, t := range *transactions {
-		fmt.Println(t)
-	}
-
-	clients := clientsbundle.GetClients()
-	for _, c := range *clients {
-		fmt.Println(c)
-	}*/
-
 	port := string(os.Getenv("ELETAB_PORT"))
 	appPath := string(os.Getenv("ELETAB_PATH"))
 
@@ -68,11 +30,13 @@ func main() {
 	apiSR.HandleFunc("/client_login", apiCtrl.HandleClientLogin).Methods(http.MethodPost)
 	apiSR.HandleFunc("/account_login", apiCtrl.HandleAccountLogin).Methods(http.MethodPost)
 
+	log.Println(path.Join(appPath,"/app/static/"))
 	staticFileDirectory := http.Dir(path.Join(appPath,"/app/static/"))
 	staticFileHandler := http.StripPrefix("/", http.FileServer(staticFileDirectory))
 	r.PathPrefix("/").Handler(staticFileHandler)
 
 	http.Handle("/", r)
+	fmt.Println("Server running on port", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 
 }
