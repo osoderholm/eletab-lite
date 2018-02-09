@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"log"
 	"os"
+	"path"
 )
 
 func main() {
@@ -50,6 +51,7 @@ func main() {
 	}*/
 
 	port := string(os.Getenv("ELETAB_PORT"))
+	appPath := string(os.Getenv("ELETAB_PATH"))
 
 	a := authbundle.Init()
 
@@ -66,7 +68,7 @@ func main() {
 	apiSR.HandleFunc("/client_login", apiCtrl.HandleClientLogin).Methods(http.MethodPost)
 	apiSR.HandleFunc("/account_login", apiCtrl.HandleAccountLogin).Methods(http.MethodPost)
 
-	staticFileDirectory := http.Dir("./app/static/")
+	staticFileDirectory := http.Dir(path.Join(appPath,"/app/static/"))
 	staticFileHandler := http.StripPrefix("/", http.FileServer(staticFileDirectory))
 	r.PathPrefix("/").Handler(staticFileHandler)
 
