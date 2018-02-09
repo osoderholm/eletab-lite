@@ -6,7 +6,7 @@ Eletab.prototype.apiCall = function(path, data, success, error) {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "http://localhost:8080/api/v1"+path,
+        "url": "/api/v1"+path,
         "method": "GET",
         "headers": {
             "authorization": "Bearer "+this.token,
