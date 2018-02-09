@@ -605,6 +605,7 @@ func (c *APIController) HandleAccountLogin(w http.ResponseWriter, r *http.Reques
 		c.SendErrorsJSON(w, http.StatusForbidden, "Invalid credentials")
 		return
 	}
+	log.Println("found account:", account)
 	if ok, err := crypt.Compare(account.Password, creds.Password); !ok {
 		log.Println(err)
 		c.SendErrorsJSON(w, http.StatusForbidden, "Invalid credentials")
