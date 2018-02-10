@@ -11,7 +11,7 @@ import (
 	"path"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/osoderholm/eletab-lite/app/common"
+	"github.com/osoderholm/eletab-lite/common"
 )
 
 // Used for applying authentication for accessing APIs

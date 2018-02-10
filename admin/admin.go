@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/osoderholm/eletab-lite/app/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/bundles/accountsbundle"
 )
 
 /*

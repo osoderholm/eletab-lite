@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/osoderholm/eletab-lite/app/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/bundles/accountsbundle"
 )
 
 // START TransactionManager

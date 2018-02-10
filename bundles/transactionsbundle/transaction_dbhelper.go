@@ -3,8 +3,8 @@ package transactionsbundle
 import (
 	"log"
 
-	"github.com/osoderholm/eletab-lite/app/bundles/accountsbundle"
-	"github.com/osoderholm/eletab-lite/app/common"
+	"github.com/osoderholm/eletab-lite/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/common"
 )
 
 // Empty helper struct for DBHelper interface

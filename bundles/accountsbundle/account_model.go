@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/osoderholm/eletab-lite/app/crypt"
+	"github.com/osoderholm/eletab-lite/crypt"
 )
 
 // User account. Contains balance and general account stuff.

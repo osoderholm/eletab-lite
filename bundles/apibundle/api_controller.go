@@ -9,12 +9,12 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
-	"github.com/osoderholm/eletab-lite/app/bundles/accountsbundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/authbundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/clientsbundle"
-	"github.com/osoderholm/eletab-lite/app/bundles/transactionsbundle"
-	"github.com/osoderholm/eletab-lite/app/common"
-	"github.com/osoderholm/eletab-lite/app/crypt"
+	"github.com/osoderholm/eletab-lite/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/bundles/authbundle"
+	"github.com/osoderholm/eletab-lite/bundles/clientsbundle"
+	"github.com/osoderholm/eletab-lite/bundles/transactionsbundle"
+	"github.com/osoderholm/eletab-lite/common"
+	"github.com/osoderholm/eletab-lite/crypt"
 	"golang.org/x/net/html"
 )
 
