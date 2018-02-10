@@ -2,11 +2,12 @@ package clientsbundle
 
 import (
 	"log"
-	"github.com/osoderholm/eletab-lite/eletab/app/common"
+
+	"github.com/osoderholm/eletab-lite/app/common"
 )
 
 // Empty helper struct for DBHelper interface
-type helper struct {}
+type helper struct{}
 
 // Mandatory table creation function
 func (helper helper) CreateTable(database *common.Database) error {
@@ -47,7 +48,9 @@ func addClientToDB(client *Client) error {
 		log.Println(err)
 	}
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 		INSERT INTO clients (
@@ -58,11 +61,15 @@ func addClientToDB(client *Client) error {
 		`
 	res, err := db.NamedExec(query, client)
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	id, err := res.LastInsertId()
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	client.ID = int(id)
 
@@ -75,7 +82,9 @@ func getClientsFromDB() (*[]Client, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &clients, err }
+	if err != nil {
+		return &clients, err
+	}
 
 	query := `SELECT * FROM clients;`
 
@@ -87,7 +96,9 @@ func getClientByKeyFromDB(key string) (*Client, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &client, err }
+	if err != nil {
+		return &client, err
+	}
 
 	query := `SELECT * FROM clients WHERE clients.key = ?;`
 
@@ -97,7 +108,9 @@ func getClientByKeyFromDB(key string) (*Client, error) {
 func deleteClientFromDB(clientID int) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `DELETE FROM clients WHERE clients.id = ?;`
 

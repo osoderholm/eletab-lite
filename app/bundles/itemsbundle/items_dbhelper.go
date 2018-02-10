@@ -1,12 +1,13 @@
 package itemsbundle
 
 import (
-	"github.com/osoderholm/eletab-lite/eletab/app/common"
 	"log"
+
+	"github.com/osoderholm/eletab-lite/app/common"
 )
 
 // Empty helper struct for DBHelper interface
-type helper struct {}
+type helper struct{}
 
 // Mandatory table creation function
 func (helper helper) CreateTable(database *common.Database) error {
@@ -59,7 +60,9 @@ func openDB() (*common.Database, error) {
 func addItemToDB(item *Item) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 		INSERT INTO items (
@@ -70,11 +73,15 @@ func addItemToDB(item *Item) error {
 		`
 	res, err := db.NamedExec(query, item)
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	id, err := res.LastInsertId()
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	item.ID = int(id)
 
@@ -86,7 +93,9 @@ func getItemsFromDB() (*[]Item, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &items, err }
+	if err != nil {
+		return &items, err
+	}
 
 	query := `SELECT
 				items.*,
@@ -104,7 +113,9 @@ func getItemByIDFromDB(itemID int) (*Item, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &item, err }
+	if err != nil {
+		return &item, err
+	}
 
 	query := `SELECT
 				items.*,
@@ -123,7 +134,9 @@ func getItemsByCategoryFromDB(category Category) (*[]Item, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &items, err }
+	if err != nil {
+		return &items, err
+	}
 
 	query := `SELECT
 				items.*,
@@ -140,7 +153,9 @@ func getItemsByCategoryFromDB(category Category) (*[]Item, error) {
 func deleteItemFromDB(itemID int) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `DELETE FROM items WHERE items.id = ?;`
 
@@ -157,7 +172,9 @@ func deleteItemFromDB(itemID int) error {
 func addCategoryToDB(category *Category) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 		INSERT INTO categories (
@@ -168,11 +185,15 @@ func addCategoryToDB(category *Category) error {
 		`
 	res, err := db.NamedExec(query, category)
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	id, err := res.LastInsertId()
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	category.ID = int(id)
 
@@ -184,7 +205,9 @@ func getCategoriesFromDB() (*[]Category, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &categories, err }
+	if err != nil {
+		return &categories, err
+	}
 
 	query := `SELECT * FROM categories;`
 
@@ -196,7 +219,9 @@ func getCategoryFromDB(categoryID int) (*Category, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &category, err }
+	if err != nil {
+		return &category, err
+	}
 
 	query := `SELECT * FROM categories WHERE categories.id = ?;`
 
@@ -206,7 +231,9 @@ func getCategoryFromDB(categoryID int) (*Category, error) {
 func deleteCategoryFromDB(categoryID int) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `DELETE FROM categories WHERE categories.id = ?;`
 

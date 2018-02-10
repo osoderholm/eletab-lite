@@ -1,32 +1,34 @@
 package accountsbundle
 
 import (
-	"time"
 	"log"
-	"github.com/osoderholm/eletab-lite/eletab/app/crypt"
+	"time"
+
+	"github.com/osoderholm/eletab-lite/app/crypt"
 )
 
 // User account. Contains balance and general account stuff.
 // Cards are added to accounts, aka, these.
 type Account struct {
-	ID			int				`json:"id" db:"id"`
-	Name		string			`json:"name" db:"name"`
-	UserName	string			`json:"username" db:"username"`
-	Password	string			`json:"-" db:"password"`
-	Balance		int64			`json:"balance" db:"balance"`
-	Level 		AccountLevel	`json:"level" db:"level"`
-	Disabled	bool			`json:"disabled" db:"disabled"`
-	Created		string			`json:"-" db:"created"`
+	ID       int          `json:"id" db:"id"`
+	Name     string       `json:"name" db:"name"`
+	UserName string       `json:"username" db:"username"`
+	Password string       `json:"-" db:"password"`
+	Balance  int64        `json:"balance" db:"balance"`
+	Level    AccountLevel `json:"level" db:"level"`
+	Disabled bool         `json:"disabled" db:"disabled"`
+	Created  string       `json:"-" db:"created"`
 }
 
 // AccountLevel defines the level of rights for account.
 // If following constants are edited, make sure to have a great
 // DB migration plan, as these are saved there.
 type AccountLevel int
+
 const (
-	LevelDefault 	= 0
-	LevelModerator 	= 1
-	LevelAdmin		= 2
+	LevelDefault    = 0
+	LevelModerator  = 1
+	LevelAdmin      = 2
 	LevelSuperAdmin = 3
 )
 
@@ -35,7 +37,9 @@ const (
 // Observe that the password passed to this function needs to be in plaintext,
 // as it is hashed within the function!
 func AddAccount(name, username, password string, balance int64, level AccountLevel) *Account {
-	if balance < 0 { return nil }
+	if balance < 0 {
+		return nil
+	}
 
 	passHash, err := crypt.Encrypt(password)
 
@@ -45,13 +49,13 @@ func AddAccount(name, username, password string, balance int64, level AccountLev
 	}
 
 	account := &Account{
-		Name: name,
+		Name:     name,
 		UserName: username,
 		Password: passHash,
-		Balance: balance,
-		Level: level,
+		Balance:  balance,
+		Level:    level,
 		Disabled: false,
-		Created: time.Now().Format(time.RFC3339),
+		Created:  time.Now().Format(time.RFC3339),
 	}
 
 	if err := addAccountToDB(account); err != nil {

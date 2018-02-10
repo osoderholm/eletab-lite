@@ -1,14 +1,15 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/apibundle"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/authbundle"
-	"net/http"
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"path"
-	"fmt"
+
+	"github.com/gorilla/mux"
+	"github.com/osoderholm/eletab-lite/app/bundles/apibundle"
+	"github.com/osoderholm/eletab-lite/app/bundles/authbundle"
 )
 
 func main() {
@@ -30,8 +31,8 @@ func main() {
 	apiSR.HandleFunc("/client_login", apiCtrl.HandleClientLogin).Methods(http.MethodPost)
 	apiSR.HandleFunc("/account_login", apiCtrl.HandleAccountLogin).Methods(http.MethodPost)
 
-	log.Println(path.Join(appPath,"/app/static/"))
-	staticFileDirectory := http.Dir(path.Join(appPath,"/app/static/"))
+	log.Println(path.Join(appPath, "/app/static/"))
+	staticFileDirectory := http.Dir(path.Join(appPath, "/app/static/"))
 	staticFileHandler := http.StripPrefix("/", http.FileServer(staticFileDirectory))
 	r.PathPrefix("/").Handler(staticFileHandler)
 

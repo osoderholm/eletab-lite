@@ -2,12 +2,13 @@ package transactionsbundle
 
 import (
 	"log"
-	"github.com/osoderholm/eletab-lite/eletab/app/common"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/accountsbundle"
+
+	"github.com/osoderholm/eletab-lite/app/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/app/common"
 )
 
 // Empty helper struct for DBHelper interface
-type helper struct {}
+type helper struct{}
 
 // Mandatory table creation function
 func (helper helper) CreateTable(database *common.Database) error {
@@ -47,7 +48,9 @@ func openDB() (*common.Database, error) {
 func addTransactionToDB(transaction *Transaction) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 		INSERT INTO transactions (
@@ -58,11 +61,15 @@ func addTransactionToDB(transaction *Transaction) error {
 		`
 	res, err := db.NamedExec(query, transaction)
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	id, err := res.LastInsertId()
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	transaction.ID = int(id)
 
@@ -73,7 +80,9 @@ func addTransactionToDB(transaction *Transaction) error {
 func updateTransactionInDB(transaction Transaction) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 			UPDATE
@@ -96,7 +105,9 @@ func getTransactionsByTimeFromDB(start, end string) (*[]Transaction, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &transactions, err }
+	if err != nil {
+		return &transactions, err
+	}
 
 	query := `SELECT * FROM transactions 
 				WHERE transactions.time >= ? AND transactions.time < ?`
@@ -110,7 +121,9 @@ func getTransactionsByAccountByTimeFromDB(account accountsbundle.Account, start,
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &transactions, err }
+	if err != nil {
+		return &transactions, err
+	}
 
 	query := `SELECT * FROM transactions 
 				WHERE transactions.time >= ? AND transactions.time < ? AND account_id = ?`

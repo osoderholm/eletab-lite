@@ -1,30 +1,31 @@
 package authbundle
 
 import (
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/pem"
+	"io/ioutil"
+	"log"
 	"os"
 	"path"
-	"log"
-	"crypto/rsa"
-	"crypto/rand"
-	"io/ioutil"
-	"encoding/pem"
-	"crypto/x509"
+
 	"github.com/dgrijalva/jwt-go"
-	"github.com/osoderholm/eletab-lite/eletab/app/common"
+	"github.com/osoderholm/eletab-lite/app/common"
 )
 
 // Used for applying authentication for accessing APIs
 type Authenticator struct {
-	signKey		*rsa.PrivateKey
-	VerifyKey 	*rsa.PublicKey
+	signKey   *rsa.PrivateKey
+	VerifyKey *rsa.PublicKey
 	common.Controller
 }
 
 // File names and path for generated RSA keys
 const (
-	keyPath 		= "keys"
-	privateKeyFile 	= "eletab.rsa.pem"
-	publicKeyFile 	= "eletab.rsa.pub.pem"
+	keyPath        = "keys"
+	privateKeyFile = "eletab.rsa.pem"
+	publicKeyFile  = "eletab.rsa.pub.pem"
 )
 
 // Initializes an authenticator.
@@ -33,7 +34,7 @@ func Init() *Authenticator {
 	createKeys()
 
 	return &Authenticator{
-		signKey: getPrivateKey(),
+		signKey:   getPrivateKey(),
 		VerifyKey: getPublicKey(),
 	}
 }
@@ -82,7 +83,7 @@ func createPrivateKey() {
 	fatal(err)
 	pemdata := pem.EncodeToMemory(
 		&pem.Block{
-			Type: "RSA PRIVATE KEY",
+			Type:  "RSA PRIVATE KEY",
 			Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
 		},
 	)
@@ -96,7 +97,7 @@ func createPublicKey(priv *rsa.PrivateKey) {
 	fatal(err)
 	pemdata := pem.EncodeToMemory(
 		&pem.Block{
-			Type: "RSA PUBLIC KEY",
+			Type:  "RSA PUBLIC KEY",
 			Bytes: PubASN1,
 		},
 	)
