@@ -1,26 +1,27 @@
 package apibundle
 
 import (
-	"net/http"
 	"encoding/json"
 	"log"
+	"net/http"
 	"strconv"
 	"strings"
-	"golang.org/x/net/html"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
-	"github.com/osoderholm/eletab-lite/eletab/app/common"
-	"github.com/osoderholm/eletab-lite/eletab/app/crypt"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/clientsbundle"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/authbundle"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/transactionsbundle"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/bundles/accountsbundle"
+	"github.com/osoderholm/eletab-lite/bundles/authbundle"
+	"github.com/osoderholm/eletab-lite/bundles/clientsbundle"
+	"github.com/osoderholm/eletab-lite/bundles/transactionsbundle"
+	"github.com/osoderholm/eletab-lite/common"
+	"github.com/osoderholm/eletab-lite/crypt"
+	"golang.org/x/net/html"
 )
 
 // Controller for the API bundle
 type APIController struct {
 	common.Controller
-	TM	*transactionsbundle.TransactionManager
+	TM *transactionsbundle.TransactionManager
 }
 
 // Creates a new API controller
@@ -29,7 +30,7 @@ func NewController() *APIController {
 }
 
 // Handle API root
-func (c *APIController) Handle(w http.ResponseWriter, r *http.Request)  {
+func (c *APIController) Handle(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	clientKey := r.Form.Get("client")
 	if len(clientKey) == 0 {
@@ -50,13 +51,13 @@ func (c *APIController) Handle(w http.ResponseWriter, r *http.Request)  {
 
 // For parsing authentication credentials for clients.
 type clientCredientials struct {
-	Key 	string 		`json:"api_key"`
-	Secret 	string 		`json:"secret"`
+	Key    string `json:"api_key"`
+	Secret string `json:"secret"`
 }
 
 // Handle card functions.
 // Action is defined within by 'gorilla' vars
-func (c *APIController) HandleCard(w http.ResponseWriter, r *http.Request)  {
+func (c *APIController) HandleCard(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	switch vars["action"] {
@@ -182,12 +183,12 @@ func authorizeClient(r *http.Request, level clientsbundle.AccessLevel) bool {
 
 // For parsing account authentication details.
 type accountCredentials struct {
-	Username	string 	`json:"username"`
-	Password	string 	`json:"password"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // Handle account actions. The actions are defined with 'gorilla' vars.
-func (c *APIController) HandleAccount(w http.ResponseWriter, r *http.Request)  {
+func (c *APIController) HandleAccount(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	switch vars["action"] {
@@ -395,7 +396,7 @@ func (c *APIController) handleAccountEdit(w http.ResponseWriter, r *http.Request
 	newPass := formValue(r, "new_pass")
 
 	disabled, err := strconv.ParseBool(formValue(r, "disabled"))
-	if tAccount.Level >=accountsbundle. LevelAdmin && err != nil {
+	if tAccount.Level >= accountsbundle.LevelAdmin && err != nil {
 		log.Println(err)
 		c.sendError(w, http.StatusBadRequest)
 		return
@@ -562,8 +563,6 @@ func (c *APIController) handleAccountDeleteCard(w http.ResponseWriter, r *http.R
 		return
 	}
 
-
-
 	account, _ := getAccount(r)
 	if account == nil {
 		c.sendError(w, http.StatusBadRequest)
@@ -615,7 +614,7 @@ func (c *APIController) HandleAccountLogin(w http.ResponseWriter, r *http.Reques
 	claims := make(jwt.MapClaims)
 	claims["account"] = account.ID
 
-	expiration := 24*100 	// 100 days
+	expiration := 24 * 100 // 100 days
 
 	token, err := authbundle.GenerateToken(expiration, claims)
 
@@ -625,7 +624,6 @@ func (c *APIController) HandleAccountLogin(w http.ResponseWriter, r *http.Reques
 	}
 	c.SendJSON(w, http.StatusOK, token)
 }
-
 
 func (c *APIController) HandleClient(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -681,7 +679,7 @@ func (c *APIController) handleClientNew(w http.ResponseWriter, r *http.Request) 
 		errs = append(errs, "Missing value for 'description'")
 	}
 	level, err := strconv.Atoi(levelStr)
-	if err != nil || ( err == nil && (level < int(clientsbundle.LevelCheck) || level > int(clientsbundle.LevelEdit))) {
+	if err != nil || (err == nil && (level < int(clientsbundle.LevelCheck) || level > int(clientsbundle.LevelEdit))) {
 		log.Println("wow", err)
 		errs = append(errs, "Invalid level")
 	}

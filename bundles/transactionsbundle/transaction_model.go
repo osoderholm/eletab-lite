@@ -1,15 +1,16 @@
 package transactionsbundle
 
 import (
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/accountsbundle"
-	"time"
 	"log"
+	"time"
+
+	"github.com/osoderholm/eletab-lite/bundles/accountsbundle"
 )
 
 // START TransactionManager
 
 // Generic transaction manager for structure
-type TransactionManager struct {}
+type TransactionManager struct{}
 
 // Creates and returns a TransactionManager
 func NewManager() *TransactionManager {
@@ -102,13 +103,13 @@ func (tm *TransactionManager) GetTransactionsByAccount(account *accountsbundle.A
 
 // Transaction struct, containing most information about a transaction
 type Transaction struct {
-	ID 			int				`json:"id" db:"id"`
-	Type 		TransactionType	`json:"type" db:"type"`
-	AccountID	int				`json:"account_id" db:"account_id"`
-	CardID		string			`json:"card_id,omitempty" db:"card_id"`
-	Sum			int64			`json:"sum" db:"sum"`
-	Accepted 	bool			`json:"accepted" db:"accepted"`
-	Time 		string			`json:"time" db:"time"`
+	ID        int             `json:"id" db:"id"`
+	Type      TransactionType `json:"type" db:"type"`
+	AccountID int             `json:"account_id" db:"account_id"`
+	CardID    string          `json:"card_id,omitempty" db:"card_id"`
+	Sum       int64           `json:"sum" db:"sum"`
+	Accepted  bool            `json:"accepted" db:"accepted"`
+	Time      string          `json:"time" db:"time"`
 }
 
 // Updates transactions details in DB
@@ -124,12 +125,12 @@ func (trans *Transaction) save() bool {
 // Makes a transaction and stores it in DB
 func makeTransaction(t TransactionType, account *accountsbundle.Account, cardID string, sum int64, accepted bool) *Transaction {
 	transaction := &Transaction{
-		Type: t,
+		Type:      t,
 		AccountID: account.ID,
-		CardID: cardID,
-		Sum: sum,
-		Accepted: accepted,
-		Time: time.Now().Format(time.RFC3339),
+		CardID:    cardID,
+		Sum:       sum,
+		Accepted:  accepted,
+		Time:      time.Now().Format(time.RFC3339),
 	}
 
 	err := addTransactionToDB(transaction)
@@ -152,9 +153,9 @@ type TransactionType int
 
 // Constant transaction type codes
 const (
-	TypePurchase 	TransactionType	= 1
-	TypeInsert		TransactionType	= 2
-	TypeRemove		TransactionType = 3
+	TypePurchase TransactionType = 1
+	TypeInsert   TransactionType = 2
+	TypeRemove   TransactionType = 3
 )
 
 // END TransactionType

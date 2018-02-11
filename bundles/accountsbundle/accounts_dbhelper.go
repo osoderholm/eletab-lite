@@ -2,11 +2,12 @@ package accountsbundle
 
 import (
 	"log"
-	"github.com/osoderholm/eletab-lite/eletab/app/common"
+
+	"github.com/osoderholm/eletab-lite/common"
 )
 
 // Empty helper struct for DBHelper interface
-type helper struct {}
+type helper struct{}
 
 // Mandatory table creation function
 func (helper helper) CreateTable(database *common.Database) error {
@@ -65,7 +66,9 @@ func openDB() (*common.Database, error) {
 func addAccountToDB(account *Account) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 		INSERT INTO accounts (
@@ -76,11 +79,15 @@ func addAccountToDB(account *Account) error {
 		`
 	res, err := db.NamedExec(query, account)
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	id, err := res.LastInsertId()
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	account.ID = int(id)
 
@@ -92,7 +99,9 @@ func getAccountsFromDB() (*[]Account, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &accounts, err }
+	if err != nil {
+		return &accounts, err
+	}
 
 	query := `SELECT * FROM accounts;`
 
@@ -104,7 +113,9 @@ func getAccountByIDFromDB(accountID int) (*Account, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &account, err }
+	if err != nil {
+		return &account, err
+	}
 
 	query := `SELECT * FROM accounts WHERE accounts.id = ?;`
 
@@ -116,7 +127,9 @@ func getAccountByUsernameFromDB(username string) (*Account, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &account, err }
+	if err != nil {
+		return &account, err
+	}
 
 	query := `SELECT * FROM accounts WHERE accounts.username = ?;`
 
@@ -126,7 +139,9 @@ func getAccountByUsernameFromDB(username string) (*Account, error) {
 func updateAccountInDB(account Account) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 			UPDATE
@@ -147,7 +162,9 @@ func updateAccountInDB(account Account) error {
 func deleteAccountFromDB(accountID int) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `DELETE FROM accounts WHERE accounts.id = ?;`
 
@@ -164,7 +181,9 @@ func deleteAccountFromDB(accountID int) error {
 func addCardToDB(card *Card) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `
 		INSERT INTO cards (
@@ -175,11 +194,15 @@ func addCardToDB(card *Card) error {
 		`
 	res, err := db.NamedExec(query, card)
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	id, err := res.LastInsertId()
 
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	card.ID = int(id)
 
@@ -191,7 +214,9 @@ func getCardsFromDB() (*[]Card, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &cards, err }
+	if err != nil {
+		return &cards, err
+	}
 
 	query := `SELECT
 				cards.*,
@@ -214,7 +239,9 @@ func getCardsByAccountFromDB(account *Account) (*[]Card, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &cards, err }
+	if err != nil {
+		return &cards, err
+	}
 
 	query := `SELECT
 				cards.*,
@@ -238,7 +265,9 @@ func getCardByCardIDFromDB(cardID string) (*Card, error) {
 
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return &card, err }
+	if err != nil {
+		return &card, err
+	}
 
 	query := `SELECT
 				cards.*,
@@ -260,7 +289,9 @@ func getCardByCardIDFromDB(cardID string) (*Card, error) {
 func deleteCardFromDB(cardID int) error {
 	db, err := openDB()
 	defer db.Close()
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 
 	query := `DELETE FROM cards WHERE cards.id = ?;`
 
@@ -269,4 +300,3 @@ func deleteCardFromDB(cardID int) error {
 }
 
 // END Card DB
-

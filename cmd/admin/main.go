@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/osoderholm/eletab-lite/eletab/app/bundles/accountsbundle"
+
+	"github.com/osoderholm/eletab-lite/bundles/accountsbundle"
 )
 
 /*
@@ -11,7 +12,7 @@ import (
 	SuperAdmins are the highest admins and have the ability to create new "normal" admins.
 	Super admins also have an account with a balance, even though it is not recommended to
 	use them for purchases. Or actually, who cares, do what ever you want... :D
- */
+*/
 
 func main() {
 	fmt.Println("Create a SuperAdmin-account")
@@ -41,10 +42,8 @@ func main() {
 
 // Read string input into variable until string is not empty
 func readString(prompt string, v *string) {
-	for ; len(*v) == 0 ; {
+	for len(*v) == 0 {
 		fmt.Print(prompt)
 		fmt.Scan(v)
 	}
 }
-
-
